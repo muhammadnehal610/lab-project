@@ -1,0 +1,106 @@
+/* Root Color Variables */
+.root {
+    -fx-base-color: #121212;
+    -fx-surface-color: #1E1E1E;
+    -fx-input-color: #252526;
+    -fx-accent-color: #007ACC;
+    -fx-text-main: #E0E0E0;
+    -fx-text-muted: #A0A0A0;
+    -fx-success: #2ECC71;
+    -fx-error: #E74C3C;
+
+    -fx-background-color: -fx-base-color;
+    -fx-font-family: "Segoe UI", "Calibri", sans-serif;
+}
+
+/* Left Form Pane */
+.main-pane {
+    -fx-background-color: #1E1E1E;
+}
+
+/* Fixes Invisible Text Issue */
+.title-label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: -fx-text-muted;
+    -fx-font-size: 13px;
+}
+
+.field-label {
+    -fx-text-fill: #C9D1D9;
+    -fx-font-size: 12px;
+}
+
+.status-label {
+    -fx-text-fill: -fx-error;
+    -fx-font-size: 12px;
+}
+
+/* Form Controls */
+.text-input {
+    -fx-background-color: #252526;
+    -fx-text-fill: #E0E0E0;
+    -fx-prompt-text-fill: #6E7681;
+    -fx-padding: 10px;
+    -fx-background-radius: 6px;
+    -fx-border-color: #333333;
+    -fx-border-radius: 6px;
+}
+
+.text-input:focused {
+    -fx-border-color: #007ACC;
+}
+
+.link-button {
+    -fx-text-fill: #007ACC;
+    -fx-font-size: 13px;
+    -fx-underline: false;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.link-button:hover {
+    -fx-text-fill: #0098FF;
+}
+
+/* Electric Blue Action Button */
+.primary-btn {
+    -fx-background-color: #007ACC;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 11px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+.primary-btn:hover {
+    -fx-background-color: #0098FF;
+}
+
+/* Right Hero Pane */
+.hero-pane {
+    -fx-background-color: linear-gradient(to bottom right, #121212, #1E1E1E, #003B66);
+}
+
+.hero-icon {
+    -fx-text-fill: #007ACC;
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.hero-title {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.hero-description {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-size: 13px;
+    -fx-alignment: center;
+}
