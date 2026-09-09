@@ -2,17 +2,12 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import org.example.service.UserService;
 import org.example.util.SceneManager;
-
-import java.io.IOException;
 
 
 public class LoginController {
@@ -26,6 +21,11 @@ public class LoginController {
     private Label lblStatus;
 
     @FXML
+    private Button loginBtn;
+
+    private final UserService userService = new UserService();
+
+    @FXML
     private void handleLogin() {
         String email = txtEmail.getText().trim();
         String password = txtPassword.getText().trim();
@@ -36,16 +36,45 @@ public class LoginController {
             return;
         }
 
-        if (email.equals("teacher@evaluator.com") && password.equals("admin123")) {
-            lblStatus.setStyle("-fx-text-fill: #3FB950;"); // Green Success
-            lblStatus.setText("Login Successful! Redirecting...");
+        loginBtn.setText("Loading...");
+        loginBtn.setDisable(true);
 
-            // Redirect to Dashboard logic comes here
-            System.out.println("User authenticated successfully as Teacher.");
-        } else {
+        javafx.concurrent.Task<Boolean> loginTask = new javafx.concurrent.Task<>(){
+            @Override
+            protected Boolean call() throws  Exception{
+                return userService.authenticateUser(email, password);
+            }
+        };
+
+        loginTask.setOnSucceeded(e -> {
+            boolean isAuthenticated = loginTask.getValue();
+
+            if (isAuthenticated) {
+                lblStatus.setStyle("-fx-text-fill: #3FB950;");
+                lblStatus.setText("Login Successful! Redirecting...");
+
+                txtEmail.clear();
+                txtPassword.clear();
+
+                loginBtn.setText("Redirecting...");
+            } else {
+                loginBtn.setDisable(false);
+                loginBtn.setText("Login");
+
+                lblStatus.setStyle("-fx-text-fill: #F85149;");
+                lblStatus.setText("Invalid email or password.");
+            }
+        });
+
+        loginTask.setOnFailed(e -> {
+            loginBtn.setDisable(false);
+            loginBtn.setText("Login");
+
             lblStatus.setStyle("-fx-text-fill: #F85149;");
             lblStatus.setText("Invalid email or password.");
-        }
+        });
+
+        new Thread(loginTask).start();
     }
 
     @FXML

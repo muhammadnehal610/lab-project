@@ -36,4 +36,8 @@ public class SceneManager {
             e.printStackTrace();
         }
     }
+
+    public static void redirectToLogin(ActionEvent event) {
+        switchScene(event, "/fxml/LoginView.fxml", "CodeEvaluator AI - Login");
+    }
 }

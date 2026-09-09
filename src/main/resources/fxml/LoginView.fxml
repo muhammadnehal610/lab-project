@@ -52,7 +52,7 @@
 
                 <Label fx:id="lblStatus" text="" styleClass="status-label"/>
 
-                <Button text="Sign In" onAction="#handleLogin" maxWidth="Infinity" styleClass="primary-btn"/>
+                <Button fx:id="loginBtn" text="Sign In" onAction="#handleLogin" maxWidth="Infinity" styleClass="primary-btn"/>
 
                 <HBox alignment="CENTER" spacing="5.0">
                     <Label text="Don't have an account?" styleClass="subtitle"/>

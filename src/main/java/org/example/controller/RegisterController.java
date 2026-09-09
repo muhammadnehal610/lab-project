@@ -2,26 +2,20 @@ package org.example.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import org.example.service.UserService;
 import org.example.util.SceneManager;
-
-import java.io.IOException;
-
 
 public class RegisterController {
 
     @FXML
-    private  TextField txtFirstName;
+    private TextField txtFirstName;
 
     @FXML
-    private  TextField txtLastName;
+    private TextField txtLastName;
 
     @FXML
     private TextField txtEmail;
@@ -33,26 +27,71 @@ public class RegisterController {
     private Label lblStatus;
 
     @FXML
-    private void handleLogin() {
+    private Button registerBtn;
+
+    private final UserService userService = new UserService();
+
+    @FXML
+    private void handleRegister(ActionEvent event) {
+        String firstName = txtFirstName.getText();
+        String lastName = txtLastName.getText();
         String email = txtEmail.getText().trim();
         String password = txtPassword.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            lblStatus.setStyle("-fx-text-fill: #F85149;");
-            lblStatus.setText("Please fill in all fields!");
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            lblStatus.getStyleClass().removeAll("status-success");
+            lblStatus.getStyleClass().add("status-error");
+            lblStatus.setText("Please fill in all fields.");
             return;
         }
 
-        if (email.equals("teacher@evaluator.com") && password.equals("admin123")) {
-            lblStatus.setStyle("-fx-text-fill: #3FB950;"); // Green Success
-            lblStatus.setText("Login Successful! Redirecting...");
+        registerBtn.setText("Loading...");
+        registerBtn.setDisable(true);
 
-            // Redirect to Dashboard logic comes here
-            System.out.println("User authenticated successfully as Teacher.");
-        } else {
-            lblStatus.setStyle("-fx-text-fill: #F85149;");
-            lblStatus.setText("Invalid email or password.");
-        }
+        javafx.concurrent.Task<Boolean> registerTask = new javafx.concurrent.Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return userService.registerUser(firstName, lastName, email, password);
+            }
+        };
+
+        registerTask.setOnSucceeded(e -> {
+            boolean isRegistered = registerTask.getValue();
+
+            if (isRegistered) {
+                lblStatus.getStyleClass().removeAll("status-error");
+                lblStatus.getStyleClass().add("status-success");
+                lblStatus.setText("Account created successfully! Please Login to continue");
+
+                txtFirstName.clear();
+                txtLastName.clear();
+                txtEmail.clear();
+                txtPassword.clear();
+
+                registerBtn.setText("Redirecting...");
+
+                javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+                delay.setOnFinished(ev -> SceneManager.redirectToLogin(event));
+                delay.play();
+            } else {
+                registerBtn.setDisable(false);
+                registerBtn.setText("Sign Up");
+
+                lblStatus.getStyleClass().removeAll("status-success");
+                lblStatus.getStyleClass().add("status-error");
+                lblStatus.setText("Registration failed: Email already exists or invalid data.");
+            }
+        });
+
+        registerTask.setOnFailed(e -> {
+            registerBtn.setDisable(false);
+            registerBtn.setText("Sign Up");
+            lblStatus.getStyleClass().removeAll("status-success");
+            lblStatus.getStyleClass().add("status-error");
+            lblStatus.setText("An unexpected error occurred.");
+        });
+
+        new Thread(registerTask).start();
     }
 
 

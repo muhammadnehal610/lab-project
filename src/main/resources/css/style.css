@@ -1,26 +1,39 @@
 /* Root Color Variables */
 .root {
+    /* Main Palette */
     -fx-base-color: #121212;
     -fx-surface-color: #1E1E1E;
     -fx-input-color: #252526;
     -fx-accent-color: #007ACC;
+    -fx-accent-hover: #0098FF;
+
+    /* Typography Colors */
     -fx-text-main: #E0E0E0;
     -fx-text-muted: #A0A0A0;
+    -fx-text-bright: #FFFFFF;
+    -fx-text-label: #C9D1D9;
+    -fx-placeholder-color: #6E7681;
+
+    /* UI Borders & States */
+    -fx-border-default: #333333;
     -fx-success: #2ECC71;
     -fx-error: #E74C3C;
+    -fx-hero-gradient-end: #003B66;
 
+    /* Global Defaults */
     -fx-background-color: -fx-base-color;
     -fx-font-family: "Segoe UI", "Calibri", sans-serif;
 }
 
+
 /* Left Form Pane */
 .main-pane {
-    -fx-background-color: #1E1E1E;
+    -fx-background-color: -fx-surface-color;
 }
 
-/* Fixes Invisible Text Issue */
+/* Typography & Labels */
 .title-label {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-bright;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
@@ -31,7 +44,7 @@
 }
 
 .field-label {
-    -fx-text-fill: #C9D1D9;
+    -fx-text-fill: -fx-text-label;
     -fx-font-size: 12px;
 }
 
@@ -42,21 +55,22 @@
 
 /* Form Controls */
 .text-input {
-    -fx-background-color: #252526;
-    -fx-text-fill: #E0E0E0;
-    -fx-prompt-text-fill: #6E7681;
+    -fx-background-color: -fx-input-color;
+    -fx-text-fill: -fx-text-main;
+    -fx-prompt-text-fill: -fx-placeholder-color;
     -fx-padding: 10px;
     -fx-background-radius: 6px;
-    -fx-border-color: #333333;
+    -fx-border-color: -fx-border-default;
     -fx-border-radius: 6px;
 }
 
-.text-input:focused {
-    -fx-border-color: #007ACC;
+/* Fixed: JavaFX uses :focused instead of :focus */
+.text-input:focus {
+    -fx-border-color: -fx-accent-color;
 }
 
 .link-button {
-    -fx-text-fill: #007ACC;
+    -fx-text-fill: -fx-accent-color;
     -fx-font-size: 13px;
     -fx-underline: false;
     -fx-border-color: transparent;
@@ -64,13 +78,13 @@
 }
 
 .link-button:hover {
-    -fx-text-fill: #0098FF;
+    -fx-text-fill: -fx-accent-hover;
 }
 
 /* Electric Blue Action Button */
 .primary-btn {
-    -fx-background-color: #007ACC;
-    -fx-text-fill: white;
+    -fx-background-color: -fx-accent-color;
+    -fx-text-fill: -fx-text-bright;
     -fx-font-weight: bold;
     -fx-padding: 11px;
     -fx-background-radius: 6px;
@@ -78,7 +92,7 @@
 }
 
 .primary-btn:hover {
-    -fx-background-color: #0098FF;
+    -fx-background-color: -fx-accent-hover;
 }
 
 /* Right Hero Pane */
@@ -87,20 +101,32 @@
 }
 
 .hero-icon {
-    -fx-text-fill: #007ACC;
+    -fx-text-fill: -fx-accent-color;
     -fx-font-size: 48px;
     -fx-font-weight: bold;
     -fx-font-family: 'Consolas', 'Courier New', monospace;
 }
 
 .hero-title {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-bright;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
 
 .hero-description {
-    -fx-text-fill: #A0A0A0;
+    -fx-text-fill: -fx-text-muted;
     -fx-font-size: 13px;
     -fx-alignment: center;
+}
+
+.status-label {
+    -fx-font-size: 12px;
+}
+
+.status-error {
+    -fx-text-fill: -fx-error;
+}
+
+.status-success {
+    -fx-text-fill: #2ECC71;
 }
