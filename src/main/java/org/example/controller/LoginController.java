@@ -6,8 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.example.model.User;
 import org.example.service.UserService;
 import org.example.util.SceneManager;
+import org.example.util.UserSession;
 
 
 public class LoginController {
@@ -26,7 +28,7 @@ public class LoginController {
     private final UserService userService = new UserService();
 
     @FXML
-    private void handleLogin() {
+    private void handleLogin(ActionEvent event) {
         String email = txtEmail.getText().trim();
         String password = txtPassword.getText().trim();
 
@@ -39,9 +41,9 @@ public class LoginController {
         loginBtn.setText("Loading...");
         loginBtn.setDisable(true);
 
-        javafx.concurrent.Task<Boolean> loginTask = new javafx.concurrent.Task<>(){
+        javafx.concurrent.Task<Boolean> loginTask = new javafx.concurrent.Task<>() {
             @Override
-            protected Boolean call() throws  Exception{
+            protected Boolean call() throws Exception {
                 return userService.authenticateUser(email, password);
             }
         };
@@ -57,6 +59,22 @@ public class LoginController {
                 txtPassword.clear();
 
                 loginBtn.setText("Redirecting...");
+
+                User user = userService.getByEmail(email);
+
+                if (user != null) {
+                    UserSession.getInstance().login(user);
+
+                    if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+                        javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+                        delay.setOnFinished(ev -> SceneManager.redirectToAdmin(event));
+                        delay.play();
+                    } else {
+                        javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(1.5));
+                        delay.setOnFinished(ev -> SceneManager.redirectToStudent(event));
+                        delay.play();
+                    }
+                }
             } else {
                 loginBtn.setDisable(false);
                 loginBtn.setText("Login");

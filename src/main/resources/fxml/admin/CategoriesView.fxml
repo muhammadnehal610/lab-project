@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<?import org.example.components.categoryForm.CategoryFormComponent?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controller.CategoryController">
+
+    <VBox spacing="10.0"
+          AnchorPane.topAnchor="10.0"
+          AnchorPane.leftAnchor="10.0"
+          AnchorPane.rightAnchor="10.0">
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <VBox alignment="CENTER_LEFT">
+                <Label text="Category Management" styleClass="admin-page-heading"/>
+                <Label text="Manage question categories, domains, and evaluation topics for tests." styleClass="admin-page-description"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Button onAction="#openAddCategory" text="Add Category" styleClass="btn-primary" />
+        </HBox>
+
+        <VBox styleClass="table-wrap">
+            <TableView fx:id="tableView">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+                <columns>
+                    <TableColumn fx:id="categoryName" text="Category Name" prefWidth="150">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="name"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="categorySlug" text="Slug" prefWidth="120">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="slug"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="categoryDescription" text="Description" prefWidth="250">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="description"/>
+                        </cellValueFactory>
+                    </TableColumn>
+
+                    <TableColumn fx:id="categoryAction" text="Actions" prefWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="action"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+
+                <sortOrder>
+                    <fx:reference source="categoryName"/>
+                </sortOrder>
+            </TableView>
+        </VBox>
+    </VBox>
+</AnchorPane>

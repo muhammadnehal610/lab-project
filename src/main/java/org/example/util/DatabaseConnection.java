@@ -18,7 +18,7 @@ public class DatabaseConnection {
     }
 
     public static void initializeDatabase() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
+        String createUserTableSQL = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "first_name TEXT NOT NULL DEFAULT '', " +
                 "last_name TEXT NOT NULL DEFAULT '', " +
@@ -27,12 +27,21 @@ public class DatabaseConnection {
                 "role TEXT NOT NULL DEFAULT 'USER'" +
                 ");";
 
+        String createCategoryTableSQL = "CREATE TABLE IF NOT EXISTS category (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT NOT NULL DEFAULT '', " +
+                "slug TEXT UNIQUE NOT NULL DEFAULT '', " +
+                "description TEXT" +
+                ");";
+
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            stmt.execute(createTableSQL);
+            stmt.execute(createUserTableSQL);
+            stmt.execute(createCategoryTableSQL);
 
             seedDefaultUsers(conn);
+            seedDefaultCategories(conn);
 
             System.out.println("Database SQLite initialized successfully with default seeds!");
 
@@ -67,7 +76,6 @@ public class DatabaseConnection {
                                 String hashedPassword = BCrypt.withDefaults().hashToString(12, plainPassword.toCharArray());
 
                                 insertStmt.setString(4, hashedPassword);
-                                insertStmt.setString(4, userData[3]);
                                 insertStmt.setString(5, userData[4]);
                                 insertStmt.executeUpdate();
                             }
@@ -77,6 +85,42 @@ public class DatabaseConnection {
             }
         } catch (SQLException e) {
             System.err.println("Error seeding default users!");
+            e.printStackTrace();
+        }
+    }
+
+    private static void seedDefaultCategories(Connection conn) {
+        String checkCategorySQL = "SELECT COUNT(*) FROM category WHERE slug = ?";
+        String insertCategorySQL = "INSERT INTO category (name, slug, description) VALUES (?, ?, ?)";
+
+        // 5 Default Categories
+        String[][] defaultCategories = {
+                {"Algorithms & Data Structures", "algorithms-ds", "Problems related to arrays, trees, graphs, and dynamic programming."},
+                {"Object-Oriented Programming", "oop", "Core concepts including inheritance, polymorphism, and encapsulation."},
+                {"Database Systems", "database-systems", "SQL queries, schema design, normalization, and indexing problems."},
+                {"Web Development", "web-dev", "Frontend and backend web technologies including REST APIs and HTTP protocols."},
+                {"System Design", "system-design", "Scalability, microservices architecture, caching, and load balancing concepts."}
+        };
+
+        try {
+            for (String[] catData : defaultCategories) {
+                try (PreparedStatement checkStmt = conn.prepareStatement(checkCategorySQL)) {
+                    checkStmt.setString(1, catData[1]);
+
+                    try (ResultSet rs = checkStmt.executeQuery()) {
+                        if (rs.next() && rs.getInt(1) == 0) {
+                            try (PreparedStatement insertStmt = conn.prepareStatement(insertCategorySQL)) {
+                                insertStmt.setString(1, catData[0]);
+                                insertStmt.setString(2, catData[1]);
+                                insertStmt.setString(3, catData[2]);
+                                insertStmt.executeUpdate();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error seeding default categories!");
             e.printStackTrace();
         }
     }

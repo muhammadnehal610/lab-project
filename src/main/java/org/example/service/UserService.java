@@ -64,4 +64,15 @@ public class UserService {
             return false;
         }
     }
+
+    public  User getByEmail(String email){
+        try {
+            return this.userRepository.getUserByEmail(email);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

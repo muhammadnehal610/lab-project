@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.model.User;
@@ -39,6 +40,11 @@ public class MainApp extends Application {
         try {
             DatabaseConnection.initializeDatabase();
 
+            Font.loadFont(getClass().getResourceAsStream("/fonts/Inter_18pt-Regular.ttf"), 14);
+            Font.loadFont(getClass().getResourceAsStream("/fonts/Inter_18pt-Medium.ttf"), 14);
+            Font.loadFont(getClass().getResourceAsStream("/fonts/Inter_18pt-SemiBold.ttf"), 14);
+            Font.loadFont(getClass().getResourceAsStream("/fonts/Inter_18pt-Bold.ttf"), 14);
+
             Stage splashStage = new Stage();
             splashStage.initStyle(StageStyle.UNDECORATED);
 
@@ -64,8 +70,6 @@ public class MainApp extends Application {
             Task<InitResult> loadTask = new Task<>() {
                 @Override
                 protected InitResult call() throws Exception {
-                    Thread.sleep(2000);
-
                     String fxmlPath = "/fxml/LoginView.fxml";
                     String title = "CodeEvaluator AI - Login";
 

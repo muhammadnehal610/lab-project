@@ -6,9 +6,65 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controller.AdminDashboardController"
-            prefHeight="400.0" prefWidth="600.0">
+            stylesheets="@/css/style.css"
+            prefWidth="1100.0" prefHeight="550.0"
+            minWidth="900.0" minHeight="500.0">
 
-</AnchorPane>
+    <left>
+        <VBox prefWidth="220.0" spacing="15.0" styleClass="admin-sidebar">
+            <Label text="Admin Portal" styleClass="admin-sidebar-header"/>
+            <VBox prefHeight="20.0"/>
+
+            <Button text="Problems" fx:id="btnProblems" onAction="#handleLoadProblems"
+                    maxWidth="1.7976931348623157E308"
+                    styleClass="admin-sidebar-nav-item, active"/>
+
+            <Button text="Categories" fx:id="btnCategories" onAction="#handleLoadCategories"
+                    maxWidth="1.7976931348623157E308"
+                    styleClass="admin-sidebar-nav-item"/>
+
+            <VBox VBox.vgrow="ALWAYS"/>
+
+            <Button text="Logout" onAction="#handleLogout"
+                    maxWidth="1.7976931348623157E308"
+                    styleClass="admin-sidebar-logout-btn"/>
+        </VBox>
+    </left>
+
+    <center>
+        <BorderPane>
+            <top>
+                <HBox styleClass="admin-header" alignment="CENTER_LEFT">
+                    <Label text="Welcome Back" styleClass="admin-welcome"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label fx:id="headerUserName" styleClass="header-user-name"/>
+
+                        <ImageView fitWidth="30" fitHeight="30" preserveRatio="false" styleClass="header-user-image">
+                            <image>
+                                <Image url="/images/profile.png"/>
+                            </image>
+                            <clip>
+                                <Circle centerX="15" centerY="15" radius="15"/>
+                            </clip>
+                        </ImageView>
+                    </HBox>
+
+
+                </HBox>
+            </top>
+            <center>
+                <StackPane fx:id="contentArea" styleClass="admin-outlet">
+                </StackPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

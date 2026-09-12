@@ -40,4 +40,12 @@ public class SceneManager {
     public static void redirectToLogin(ActionEvent event) {
         switchScene(event, "/fxml/LoginView.fxml", "CodeEvaluator AI - Login");
     }
+
+    public static void redirectToAdmin(ActionEvent event) {
+        switchScene(event, "/fxml/admin/AdminDashboardView.fxml", "CodeEvaluator AI - Login");
+    }
+
+    public static void redirectToStudent(ActionEvent event) {
+        switchScene(event, "/fxml/student/StudentDashboardView.fxml", "CodeEvaluator AI - Login");
+    }
 }
