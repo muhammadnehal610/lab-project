@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.web.HTMLEditor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.Region?>
+<fx:root type="javafx.scene.layout.VBox"
+         prefWidth="700.0"
+         prefHeight="560.0"
+         minWidth="700.0"
+         minHeight="560.0"
+         maxWidth="700.0"
+         maxHeight="560.0"
+         styleClass="problem-modal"
+         stylesheets="/css/style.css"
+         xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <ScrollPane fitToWidth="true"
+                hbarPolicy="NEVER"
+                VBox.vgrow="ALWAYS"
+                styleClass="modal-scroll">
+        <VBox spacing="20.0">
+            <padding>
+                <Insets top="24"
+                        right="24"
+                        bottom="24"
+                        left="24"/>
+            </padding>
+            <Label fx:id="formTitleLabel"
+                   text="Add New Problem"
+                   styleClass="problem-model-title"/>
+
+            <VBox spacing="6">
+                <Label text="Problem Title"
+                       styleClass="problem-field-label"/>
+
+                <TextField fx:id="txtTitle" promptText="e.g. Two Sum" styleClass="text-input"/>
+            </VBox>
+
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Category" styleClass="problem-field-label"/>
+                    <ComboBox fx:id="categoriesDropdown"
+                              maxWidth="Infinity"
+                              styleClass="dropdown-field"
+                              style="-fx-background-color: -fx-input-color;"
+                              promptText="Select Category"/>
+                </VBox>
+
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Difficulty" styleClass="problem-field-label"/>
+                    <ComboBox fx:id="difficultyDropdown"
+                              maxWidth="Infinity"
+                              styleClass="dropdown-field"
+                              style="-fx-background-color: -fx-input-color;"
+                              promptText="Select Difficulty"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="6">
+                <Label text="Description"
+                       styleClass="problem-field-label"/>
+
+                <HTMLEditor fx:id="descriptionEditor"
+                            prefHeight="250.0"
+                            styleClass="custom-html-editor"
+                />
+            </VBox>
+
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Sample Input"
+                           styleClass="problem-field-label"/>
+                    <TextArea fx:id="sampleInputTextArea"
+                              styleClass="text-input-area"
+                              promptText="Enter sample input (e.g., 5 \n1 2 3 4 5)..."
+                              wrapText="true"
+                              prefRowCount="3"
+                              prefHeight="85.0"
+
+                    />
+                </VBox>
+
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Sample Output"
+                           styleClass="problem-field-label"/>
+                    <TextArea fx:id="sampleOutputTextArea"
+                              styleClass="text-input-area"
+                              promptText="Enter expected output (e.g., 15)..."
+                              wrapText="true"
+                              prefRowCount="3"
+                              prefHeight="85.0"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="12">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Test Cases" styleClass="form-title-small"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="addTestCaseBtn"
+                            text="+ Add Case"
+                            onAction="#handleAddTestCase"
+                            styleClass="add-testcase-btn"/>
+                </HBox>
+
+                <VBox fx:id="testCasesContainer" spacing="12"/>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                <VBox.margin>
+                    <Insets top="8.0"/>
+                </VBox.margin>
+                <Button onAction="#handleCancel" styleClass="btn-secondary" text="Cancel"/>
+                <Button fx:id="saveBtn" onAction="#handleSave" styleClass="btn-primary"
+                        text="Save Category"/>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</fx:root>

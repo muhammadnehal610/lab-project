@@ -9,25 +9,27 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository = new CategoryRepository();
 
-    public List<Category> getCategories(int page, int limit) {
-        int offset = (page - 1) * limit;
+    public Category addCategory(Category category) {
+        return this.categoryRepository.addCategory(category);
+    }
 
-        try {
-            return this.categoryRepository.getCategories(offset, limit);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public List<Category> getCategories( String q) {
+        return this.categoryRepository.getCategories( q);
+    }
 
-        return null;
+    public List<Category> getCategoriesNames() {
+        return this.categoryRepository.getCategoriesNames();
+    }
+
+    public int getTotalCategoryCount(String q) {
+        return this.categoryRepository.getTotalCategoryCount(q);
     }
 
     public boolean deleteCategory(int id) {
-        try {
-            return this.categoryRepository.deleteCategoryById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return this.categoryRepository.deleteCategoryById(id);
+    }
 
-        return false;
+    public Category updateCategory(Category category) {
+        return this.categoryRepository.updateCategory(category);
     }
 }

@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import org.example.model.User;
 import org.example.util.SceneManager;
@@ -15,7 +13,8 @@ import org.example.util.SessionManager;
 import org.example.util.UserSession;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class AdminDashboardController {
     @FXML
@@ -30,6 +29,9 @@ public class AdminDashboardController {
     @FXML
     private Label headerUserName;
 
+    @FXML
+    private Label headerDate;
+
     User currentUser = UserSession.getInstance().getCurrentUser();
 
     @FXML
@@ -37,6 +39,8 @@ public class AdminDashboardController {
         handleLoadProblems();
 
         headerUserName.setText(currentUser.getFullName());
+
+        headerDate.setText(printDate());
     }
 
     @FXML
@@ -74,5 +78,13 @@ public class AdminDashboardController {
         SessionManager.clearSession();
         UserSession.getInstance().logout();
         SceneManager.redirectToLogin(event);
+    }
+
+    private String printDate() {
+        LocalDate currentDate = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy");
+
+        return currentDate.format(formatter);
     }
 }

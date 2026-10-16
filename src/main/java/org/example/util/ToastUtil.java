@@ -62,7 +62,10 @@ public class ToastUtil {
         );
 
         popup.getContent().add(root);
-        popup.setAutoHide(true);
+
+        popup.setAutoHide(false);
+
+        root.setMouseTransparent(true);
 
         root.setOpacity(0);
         root.setTranslateY(10);
@@ -78,7 +81,7 @@ public class ToastUtil {
                 )
         );
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(4));
+        PauseTransition delay = new PauseTransition(Duration.seconds(2.5));
 
         Timeline fadeOut = new Timeline(
                 new KeyFrame(Duration.millis(180),

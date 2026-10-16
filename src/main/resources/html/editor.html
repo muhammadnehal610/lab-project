@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- CodeMirror Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+
+    <!-- Dracula Theme & Language Mode -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
+
+    <!-- ADDONS FOR FORMATTING & INTELLISENSE -->
+    <!-- 1. Auto Close Brackets -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/edit/closebrackets.min.js"></script>
+    <!-- 2. Show Hint (Autocomplete) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/addon/hint/anyword-hint.min.js"></script>
+
+    <style>
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #282a36; }
+        .CodeMirror { height: 100%; font-size: 16px; font-family: 'Consolas', monospace; }
+
+        /* Autocomplete Box ki styling taake Dracula theme se match kare */
+        .CodeMirror-hints {
+            background-color: #282a36;
+            color: #f8f8f2;
+            border: 1px solid #6272a4;
+            font-family: 'Consolas', monospace;
+        }
+        .CodeMirror-hint-active {
+            background-color: #44475a;
+            color: #50fa7b;
+        }
+    </style>
+</head>
+<body>
+<textarea id="code-editor"></textarea>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+        lineNumbers: true,
+        mode: "text/x-java", // Default Java
+        theme: "dracula",
+        matchBrackets: true,
+        autoCloseBrackets: true, // <--- Auto formatting / Brackets closing
+        smartIndent: true,       // <--- Smart Formatting
+        indentUnit: 4,
+        extraKeys: {"Ctrl-Space": "autocomplete"} // <--- Shortcut for Intellisense
+    });
+
+    // Default Code
+    editor.setValue("public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World!\");\n    }\n}");
+
+    // Auto-show autocomplete hint while typing
+    editor.on("inputRead", function(instance, changeObj) {
+        // Agar space, enter, ya symbols type na ho tabhi hint dikhao
+        if (!/^[a-zA-Z]+$/.test(changeObj.text[0])) {
+            return;
+        }
+        editor.showHint({completeSingle: false});
+    });
+
+    function getCode() {
+        return editor.getValue();
+    }
+
+    function changeLanguage(lang) {
+        if (lang === 'cpp') {
+            editor.setOption("mode", "text/x-c++src");
+            editor.setValue("#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello World!\" << endl;\n    return 0;\n}");
+        } else if (lang === 'java') {
+            editor.setOption("mode", "text/x-java");
+            editor.setValue("public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World!\");\n    }\n}");
+        }
+    }
+</script>
+</body>
+</html>

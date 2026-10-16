@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.text.TextFlow?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@/css/style.css"
+            fx:controller="org.example.controller.WorkspaceController"
+            prefWidth="1100.0" prefHeight="550.0"
+            minWidth="900.0" minHeight="500.0">
+
+    <VBox styleClass="main-scroll-pane"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <VBox>
+            <HBox alignment="CENTER_LEFT" prefWidth="Infinity" spacing="10" styleClass="workspace-header"
+                  style="-fx-padding: 15px;">
+                <!-- Updated onAction method name to goBack -->
+                <Button onAction="#goBack" text="← Back" styleClass="workspace-back-btn"/>
+
+                <Label fx:id="problemName"
+                       text="Loading..."
+                       styleClass="workspace-problem-name"/>
+            </HBox>
+        </VBox>
+
+        <SplitPane dividerPositions="0.5"
+                   VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: transparent;">
+
+            <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+                <VBox spacing="20" style="-fx-padding: 15px ;">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <Label fx:id="formTitleLabel"
+                           text="Problem Details"
+                           styleClass="workspace-main-title"/>
+
+                    <VBox spacing="8">
+                        <Label text="Problem Title"
+                               styleClass="workspace-field-label"/>
+                        <Label fx:id="titleLabel"
+                               styleClass="workspace-field-value"
+                               wrapText="true"/>
+                    </VBox>
+
+                    <HBox spacing="40">
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <Label text="Category"
+                                   styleClass="workspace-field-label"/>
+                            <Label fx:id="categoryLabel"
+                                   styleClass="workspace-field-value"
+                                   wrapText="true"/>
+                        </VBox>
+
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <Label text="Difficulty"
+                                   styleClass="workspace-field-label"/>
+                            <Label fx:id="difficultyLabel"
+                                   styleClass="workspace-field-value"/>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="8">
+                        <Label text="Description"
+                               styleClass="workspace-field-label"/>
+                        <WebView fx:id="descriptionWebView"
+                                 minHeight="-Infinity"
+                                 maxHeight="-Infinity"
+                                 prefHeight="50.0"
+                                 mouseTransparent="true"/>
+                    </VBox>
+
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <Label text="Sample Input"
+                                   styleClass="workspace-field-label"/>
+                            <VBox styleClass="sample-box-container" VBox.vgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+                                <Label fx:id="sampleInputLabel"
+                                       styleClass="sample-box-text"
+                                       wrapText="true"
+                                       maxHeight="Infinity"/>
+                            </VBox>
+                        </VBox>
+
+                        <VBox spacing="8" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <Label text="Sample Output"
+                                   styleClass="workspace-field-label"/>
+                            <VBox styleClass="sample-box-container" VBox.vgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="12" right="12" bottom="12" left="12"/>
+                                </padding>
+                                <Label fx:id="sampleOutputLabel"
+                                       styleClass="sample-box-text"
+                                       wrapText="true"
+                                       maxHeight="Infinity"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+
+            <SplitPane orientation="VERTICAL"
+                       dividerPositions="0.7"
+                       style="-fx-background-color: transparent;">
+
+                <!-- RIGHT TOP: Code Editor (70% Height) -->
+                <VBox>
+                    <!-- Editor Header with Run Button -->
+                    <!-- Editor Header with Run Button & Language Switch -->
+                    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #282a36; -fx-padding: 8 15;">
+                        <Label text="Code Editor" textFill="#f8f8f2" style="-fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
+
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <ComboBox fx:id="languageComboBox" styleClass="dropdown-field" prefWidth="100.0"/>
+
+                        <Button text="▶ Run Code" onAction="#runCode" styleClass="primary-btn"/>
+                    </HBox>
+
+                    <WebView fx:id="codeEditorWebView" VBox.vgrow="ALWAYS"/>
+                </VBox>
+
+                <!-- RIGHT BOTTOM: Output / Test Results (30% Height) -->
+                <ScrollPane fx:id="terminalScrollPane" fitToWidth="true" fitToHeight="true" style="-fx-background: transparent; -fx-background-color: #1e1e1e;">
+                    <VBox spacing="10" style="-fx-padding: 10;">
+                        <Label text="Terminal Output:" textFill="#C7CDD4"/>
+
+                        <TextFlow fx:id="terminalOutputFlow" />
+
+                    </VBox>
+                </ScrollPane>
+            </SplitPane>
+        </SplitPane>
+    </VBox>
+</AnchorPane>

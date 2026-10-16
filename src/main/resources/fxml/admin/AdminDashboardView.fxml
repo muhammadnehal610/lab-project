@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controller.AdminDashboardController"
@@ -18,16 +14,37 @@
 
     <left>
         <VBox prefWidth="220.0" spacing="15.0" styleClass="admin-sidebar">
-            <Label text="Admin Portal" styleClass="admin-sidebar-header"/>
-            <VBox prefHeight="20.0"/>
+            <HBox styleClass="admin-sidebar-header">
+                <Label text="Admin Portal" />
+            </HBox>
 
-            <Button text="Problems" fx:id="btnProblems" onAction="#handleLoadProblems"
-                    maxWidth="1.7976931348623157E308"
-                    styleClass="admin-sidebar-nav-item, active"/>
+            <VBox styleClass="admin-sidebar-body" spacing="20">
+                <children>
+                    <!-- Problems Item -->
+                    <Button fx:id="btnProblems"
+                            text="Problems"
+                            onAction="#handleLoadProblems"
+                            maxWidth="1.7976931348623157E308"
+                            styleClass="admin-sidebar-nav-item, active">
+                        <graphic>
+                            <FontIcon iconLiteral="fth-code" styleClass="nav-icon" />
+                        </graphic>
+                    </Button>
 
-            <Button text="Categories" fx:id="btnCategories" onAction="#handleLoadCategories"
-                    maxWidth="1.7976931348623157E308"
-                    styleClass="admin-sidebar-nav-item"/>
+                    <!-- Categories Item -->
+                    <Button fx:id="btnCategories"
+                            text="Categories"
+                            onAction="#handleLoadCategories"
+                            maxWidth="1.7976931348623157E308"
+                            styleClass="admin-sidebar-nav-item">
+                        <graphic>
+                            <FontIcon iconLiteral="fth-grid" styleClass="nav-icon" />
+                        </graphic>
+                    </Button>
+                </children>
+            </VBox>
+
+
 
             <VBox VBox.vgrow="ALWAYS"/>
 
@@ -40,26 +57,10 @@
     <center>
         <BorderPane>
             <top>
-                <HBox styleClass="admin-header" alignment="CENTER_LEFT">
-                    <Label text="Welcome Back" styleClass="admin-welcome"/>
-
-                    <Region HBox.hgrow="ALWAYS"/>
-
-                    <HBox spacing="10" alignment="CENTER">
-                        <Label fx:id="headerUserName" styleClass="header-user-name"/>
-
-                        <ImageView fitWidth="30" fitHeight="30" preserveRatio="false" styleClass="header-user-image">
-                            <image>
-                                <Image url="/images/profile.png"/>
-                            </image>
-                            <clip>
-                                <Circle centerX="15" centerY="15" radius="15"/>
-                            </clip>
-                        </ImageView>
-                    </HBox>
-
-
-                </HBox>
+                <VBox styleClass="admin-header" alignment="CENTER_LEFT">
+                    <Label fx:id="headerUserName"  styleClass="header-user-name"/>
+                    <Label fx:id="headerDate"  styleClass="header-date"/>
+                </VBox>
             </top>
             <center>
                 <StackPane fx:id="contentArea" styleClass="admin-outlet">

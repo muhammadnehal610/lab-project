@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<fx:root type="javafx.scene.layout.VBox"
+         prefWidth="700.0"
+         prefHeight="560.0"
+         minWidth="700.0"
+         minHeight="560.0"
+         maxWidth="700.0"
+         maxHeight="560.0"
+         styleClass="problem-modal"
+         stylesheets="/css/style.css"
+         xmlns="http://javafx.com/javafx/17"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <ScrollPane fitToWidth="true"
+                hbarPolicy="NEVER"
+                VBox.vgrow="ALWAYS"
+                styleClass="modal-scroll">
+        <VBox spacing="20.0">
+            <padding>
+                <Insets top="24"
+                        right="24"
+                        bottom="24"
+                        left="24"/>
+            </padding>
+            <Label fx:id="formTitleLabel"
+                   text="Problem Details"
+                   styleClass="problem-model-title"/>
+
+            <VBox spacing="6">
+                <Label text="Problem Title"
+                       styleClass="problem-field-label"/>
+                <Label fx:id="titleLabel"
+                       styleClass="problem-value"
+                       wrapText="true"/>
+            </VBox>
+
+            <HBox spacing="30">
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Category"
+                           styleClass="problem-field-label"/>
+                    <Label fx:id="categoryLabel"
+                           styleClass="problem-value"
+                           wrapText="true"/>
+                </VBox>
+
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Difficulty"
+                           styleClass="problem-field-label"/>
+                    <Label fx:id="difficultyLabel"
+                           styleClass="problem-value"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="6">
+                <Label text="Description"
+                       styleClass="problem-field-label"/>
+                <WebView fx:id="descriptionWebView"
+                         minHeight="-Infinity"
+                         maxHeight="-Infinity"
+                         prefHeight="50.0"
+                         mouseTransparent="true"/>
+            </VBox>
+
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Sample Input"
+                           styleClass="problem-field-label"/>
+                    <Label fx:id="sampleInputLabel"
+                           styleClass="view-code-label"
+                           wrapText="true"
+                           maxHeight="Infinity"
+                           VBox.vgrow="ALWAYS"
+                    />
+                </VBox>
+                <VBox spacing="6"
+                      HBox.hgrow="ALWAYS">
+                    <Label text="Sample Output"
+                           styleClass="problem-field-label"/>
+                    <Label fx:id="sampleOutputLabel"
+                           styleClass="view-code-label"
+                           wrapText="true"
+                           maxHeight="Infinity"
+                           VBox.vgrow="ALWAYS"
+                    />
+                </VBox>
+            </HBox>
+
+            <VBox spacing="12">
+                <Label text="Test Cases"
+                       styleClass="form-title-small"/>
+                <VBox fx:id="testCasesContainer"
+                      spacing="12"/>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+</fx:root>
